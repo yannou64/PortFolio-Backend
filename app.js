@@ -9,12 +9,15 @@ dotenv.config()
 const app = express()
 const port = process.env.PORT || 3000
 
+// Connection à la bdd
 connectionBDD()
+
+// Lancement du serveur
 app.listen(port, () => {
     console.log(`Le serveur est démarré sur http://localhost:${port}`)
 })
 
-// middlewares de préparation
+// middlewares de préparation de la requête
 app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
