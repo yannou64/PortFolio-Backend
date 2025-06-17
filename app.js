@@ -2,6 +2,7 @@ import express from "express"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
 import connectionBDD from "./config/dbConnecion.js"
+import authentificationRouter from "./routers/authentificationRouter.js"
 import cors from "cors"
 
 dotenv.config()
@@ -19,6 +20,6 @@ app.use(express.json())
 app.use(cookieParser())
 
 // routes du projet
-    
+app.use("/auth", authentificationRouter)
 
 
