@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export async function registerController(req, res) {
-  const { username, email, password } = req.body;
+  const { username, email, password, role = "user" } = req.body;
   if (!username || !email || !password) return res.status(400).json({ message: "Missing data" });
 
   try {
@@ -19,6 +19,7 @@ export async function registerController(req, res) {
       username,
       email,
       password: hashedPassword,
+      role
     });
 
     // reponse
@@ -41,12 +42,12 @@ export async function loginController(req, res) {
     if (!isPasswordValid) return res.status(400).json({ message: "bad connection parameters" });
 
     // Le user existe, on génère un token qu'on lui communique
-    const token = jwt.sign({ username: user.username, email }, process.env.SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ username: user.username, role: user.role }, process.env.SECRET, { expiresIn: "1h" });
     res.cookie("token", token, {
-      httpOnly: true,
+      httpOnly: false,
       sameSite: "strict",
     });
-
+    console.log(user.role)
     // Réponse
     res.status(200).json({ message: "login success", username: user.username });
   } catch (e) {
