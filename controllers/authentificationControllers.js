@@ -37,19 +37,18 @@ export async function loginController(req, res) {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "bad connection parameters" });
 
-    const isPasswordValid = bcrypt.compare(password, user.password);
-    if (!isPasswordValid) res.status(400).json({ message: "bad connection parameters" });
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) return res.status(400).json({ message: "bad connection parameters" });
 
     // Le user existe, on génère un token qu'on lui communique
     const token = jwt.sign({ username: user.username, email }, process.env.SECRET, { expiresIn: "1h" });
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV || "production",
-      samSite: "strict",
+      sameSite: "strict",
     });
 
     // Réponse
-    res.status(200).json({ message: "User login successfull" });
+    res.status(200).json({ message: "login success", username: user.username });
   } catch (e) {
     res.status(500).json({ message: `Problem whith login the user : ${e.message}` });
   }
@@ -61,11 +60,7 @@ export async function logoutController(req, res) {
   if (!token) return res.status(400).json({ message: "No token provided" });
 
   // Nettoyer le cookie
-  res.clearCookie("token", {
-    httpOnly: true,
-    secure: true,
-    samSite: "strict",
-  });
+  res.clearCookie("token")
 
   // Réponse
   res.status(200).json({ message: "logout successful" });

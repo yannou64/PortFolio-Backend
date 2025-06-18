@@ -5,7 +5,7 @@ dotenv.config()
 export default function verifyToken(req, res, next) {
     // On vérifie que le client possède un token
     const token = req.cookies.token
-    if(!token) return res.status(401).json({message: "You are not allowed to access"})
+    if(!token) return res.status(401).json({message: `You are not allowed to access token : ${req.cookies}`})
 
     // On vérifie la validité du token
     const decoded = jwt.verify(token, process.env.SECRET)
