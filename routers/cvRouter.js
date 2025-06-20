@@ -8,7 +8,9 @@ import {
   updateTitreAccrocheController,
   createInteretController,
   getInteretsController,
-  deleteInteretController
+  deleteInteretController,
+  getInteretController,
+  updateInteretController
 } from "../controllers/cvController.js";
 
 const cvRouter = express.Router();
@@ -18,8 +20,10 @@ cvRouter.get("/coordonnees", getCoordonneesController);
 cvRouter.put("/coordonnees/:id", updateCoordonneesController);
 cvRouter.get("/titreAccroche", getTitreAccrocheController);
 cvRouter.put("/titreAccroche/:id", updateTitreAccrocheController)
+cvRouter.get("/interet/:id", getInteretController)
 cvRouter.get("/interets", getInteretsController)
 cvRouter.post("/newInteret", createInteretController)
 cvRouter.delete("/interet/:id", deleteInteretController)
+cvRouter.put("/interet/:id", updateInteretController)
 
 export default cvRouter;

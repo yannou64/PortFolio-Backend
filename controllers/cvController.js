@@ -121,3 +121,25 @@ export async function deleteInteretController(req, res) {
     res.status(400).json({ message: `Error in deleteInteretController : ${e.message}` });
   }
 }
+
+export async function getInteretController(req, res) {
+  const { id } = req.params;
+  try {
+    const interet = await Interet.findById(id);
+    res.status(200).json({ message: `get interet success`, interet });
+  } catch (e) {
+    res.status(400).json({ message: `Error in getInteretController : ${e.message}` });
+  }
+}
+
+export async function updateInteretController(req, res) {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    const interet = data.interet;
+    await Interet.findOneAndUpdate({ _id: id }, { interet });
+    res.status(200).json({ message: `update success` });
+  } catch (e) {
+    res.status(400).json({ message: `Error in updateInteretController : ${e.message}` });
+  }
+}
