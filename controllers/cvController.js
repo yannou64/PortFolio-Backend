@@ -1,5 +1,6 @@
 import Coordonnees from "../models/Coordonnees.js";
 import TitreAccroche from "../models/TitreAccroche.js";
+import Interet from "../models/Interet.js";
 
 export async function getCvController(req, res) {
   res.status(200).json({ message: "donnée du cv bien reçu" });
@@ -90,4 +91,23 @@ export async function updateTitreAccrocheController(req, res) {
   } catch (e) {
     res.status(400).json({ message: `Error in updateTitreAccrocheController : ${e.message}` });
   }
+}
+
+export async function createInteretController(req, res){
+    const { interet } = req.body
+    try {
+        await Interet.create({interet})
+        res.status(200).json({message: `new interet create`})
+    } catch (e) {
+        res.status(400).json({message: `Error in createInteretController : ${e.message}`})
+    }
+}
+
+export async function getInteretsController(req, res){
+    try {
+        const interets = await Interet.find()
+        res.status(200).json({message: `getInterets success`, data: interets})
+    } catch (e) {
+        res.status(400).json({message: `Error in getInteretsController : ${e.message}`})
+    }
 }
