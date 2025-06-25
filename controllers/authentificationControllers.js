@@ -43,13 +43,14 @@ export async function loginController(req, res) {
 
     // Le user existe, on génère un token qu'on lui communique
     const token = jwt.sign({ username: user.username, role: user.role }, process.env.SECRET, { expiresIn: "1h" });
+    
     res.cookie("token", token, {
       httpOnly: false,
-      sameSite: "strict",
+      secure: false,
+      sameSite: 'lax',
     });
-    console.log(user.role)
     // Réponse
-    res.status(200).json({ message: "login success", username: user.username });
+    res.status(200).json({ message: "login success"});
   } catch (e) {
     res.status(500).json({ message: `Problem whith login the user : ${e.message}` });
   }
