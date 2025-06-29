@@ -1,0 +1,1 @@
+import Techno from "../../models/Techno.js"

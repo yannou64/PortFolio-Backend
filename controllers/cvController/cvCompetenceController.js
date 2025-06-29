@@ -1,0 +1,1 @@
+import Competence from "../../models/Competence.js"

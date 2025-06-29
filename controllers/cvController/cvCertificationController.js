@@ -1,0 +1,1 @@
+import Certification from "../../models/Certification.js"
