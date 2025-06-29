@@ -1,4 +1,5 @@
 import express from "express";
+import verifyToken from "../../middleware/verifyToken.js";
 
 import {
   createLangueController,
@@ -10,10 +11,10 @@ import {
 
 const cvLangueRouter = express.Router();
 
-cvLangueRouter.post("/", createLangueController);
+cvLangueRouter.post("/", verifyToken, authorizedRoles("admin"), createLangueController);
 cvLangueRouter.get("/", getLanguesController);
-cvLangueRouter.delete("/:id", deleteLangueController);
-cvLangueRouter.get("/:id", getLangueController);
-cvLangueRouter.put("/:id", updateLangueController);
+cvLangueRouter.delete("/:id", verifyToken, authorizedRoles("admin"), deleteLangueController);
+cvLangueRouter.get("/:id", verifyToken, authorizedRoles("admin"), getLangueController);
+cvLangueRouter.put("/:id", verifyToken, authorizedRoles("admin"), updateLangueController);
 
 export default cvLangueRouter;
