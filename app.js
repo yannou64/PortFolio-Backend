@@ -12,6 +12,7 @@ import cvLangueRouter from "./routers/cvRouters/cvLangueRouter.js";
 import cvTechnoRouter from "./routers/cvRouters/cvTechnoRouter.js";
 import cvTitreAccrocheRouter from "./routers/cvRouters/cvTitreAccrocheRouter.js";
 import cvCertificationRouter from "./routers/cvRouters/cvCertificationRouter.js";
+import priseDeContactRouter from "./routers/priseDeContactRouter.js"
 import cors from "cors";
 
 dotenv.config();
@@ -47,3 +48,5 @@ app.use("/api/cv/interets", cvInteretRouter);
 app.use("/api/cv/langues", cvLangueRouter);
 app.use("/api/cv/technos", cvTechnoRouter);
 app.use("/api/cv/titreAccroche", cvTitreAccrocheRouter);
+app.use("/priseDeContact", priseDeContactRouter)
+

@@ -9,7 +9,7 @@ export default function verifyToken(req, res, next) {
 
     // On vérifie la validité du token
     const decoded = jwt.verify(token, process.env.SECRET)
-
+    if(!decoded) return res.status(401).json({message: `Session expired please login`})
     // On créé user dans la requête
     req.user = decoded
 

@@ -1,5 +1,6 @@
 import express from "express";
 import verifyToken from "../../middleware/verifyToken.js";
+import authorizedRoles from "../../middleware/authorizedRole.js";
 
 import {
   createLangueController,

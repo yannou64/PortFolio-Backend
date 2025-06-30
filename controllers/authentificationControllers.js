@@ -57,13 +57,18 @@ export async function loginController(req, res) {
 }
 
 export async function logoutController(req, res) {
-  // vérifier la présence du token
-  const token = req.cookies.token;
-  if (!token) return res.status(400).json({ message: "No token provided" });
+  try {
+    // vérifier la présence du token
+    const token = req.cookies.token;
+    if (!token) return res.status(400).json({ message: "No token provided" });
+  
+    // Nettoyer le cookie
+    res.clearCookie("token")
+  
+    // Réponse
+    res.status(200).json({ message: "logout successful" });
 
-  // Nettoyer le cookie
-  res.clearCookie("token")
-
-  // Réponse
-  res.status(200).json({ message: "logout successful" });
+  } catch (e) {
+    res.status(500).json({message: `Error with logout: ${e}`})
+  }
 }

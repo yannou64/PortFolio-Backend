@@ -1,5 +1,6 @@
 import express from "express";
 import verifyToken from "../../middleware/verifyToken.js";
+import authorizedRoles from "../../middleware/authorizedRole.js";
 
 import {
   createInteretController,
@@ -8,7 +9,6 @@ import {
   getInteretsController,
   updateInteretController
 } from "../../controllers/cvController/cvInteretController.js";
-import authorizedRoles from "../../middleware/authorizedRole.js";
 
 const cvInteretRouter = express.Router();
 

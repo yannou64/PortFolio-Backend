@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const CompetenceShema = new mongoose.Schema(
   {
-    title: {
+    competence: {
       type: String,
       required: true,
       trim: true,
     },
-    category: {
+    categorie: {
       type: String,
       default: "Soft Skill",
       enum: ["Soft Skill", "Hard Skill"],
