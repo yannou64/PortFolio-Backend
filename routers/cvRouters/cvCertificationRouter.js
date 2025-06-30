@@ -1,7 +1,13 @@
 import express from "express";
 
-import {} from "../../controllers/cvController/cvCertificationController.js";
+import {getAllCertifications, createCertification, deleteCertification, getCertification, updateCertification} from "../../controllers/cvController/cvCertificationController.js";
 
 const cvCertificationRouter = express.Router();
 
-export default cvCertificationRouter 
+cvCertificationRouter.get('/', getAllCertifications)
+cvCertificationRouter.post('/', createCertification)
+cvCertificationRouter.delete('/:id', deleteCertification)
+cvCertificationRouter.get('/:id', getCertification)
+cvCertificationRouter.put('/:id', updateCertification)
+
+export default cvCertificationRouter

@@ -7,17 +7,17 @@ const CertificationSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    image: {
+    urlImage: {
       type: String,
       trim: true,
       default: "",
     },
-    category: {
+    categorie: {
       type: String,
       default: "Certification",
       enum: ["Certification", "Diplôme"],
     },
-    date: {
+    dateObtention: {
       type: Date,
       default: Date.now,
     },
