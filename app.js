@@ -38,6 +38,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // routes du projet
+app.use("/uploads", express.static("uploads"));
 app.use("/api/auth", authentificationRouter);
 app.use("/api/cv/actions", cvActionRouter);
 app.use("/api/cv/certifications", cvCertificationRouter);

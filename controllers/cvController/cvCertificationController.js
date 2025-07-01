@@ -10,11 +10,15 @@ export async function getAllCertifications(req, res) {
 }
 
 export async function createCertification(req, res) {
-  const { title, urlImage, categorie, dateObtention, lieu, organisme } = req.body;
+  const { title, categorie, dateObtention, lieu, organisme } = req.body;
+  let imgPath = null;
+  if (req.file) {
+    imgPath = req.file.path;
+  }
   try {
     await Certification.create({
       title,
-      urlImage,
+      urlImage: imgPath,
       categorie,
       dateObtention,
       lieu,
@@ -48,11 +52,15 @@ export async function getCertification(req, res){
 
 export async function updateCertification(req, res){
     const {id} = req.params
-    const {title, urlImage, categorie, dateObtention, lieu, organisme} = req.body
+    const {title, categorie, dateObtention, lieu, organisme} = req.body
+    let imgpath = null
+    if(req.file) {
+      imgpath = req.file.path
+    }
     try {
         await Certification.findByIdAndUpdate(id, {
             title,
-            urlImage,
+            urlImage: imgpath,
             categorie,
             dateObtention,
             lieu,
