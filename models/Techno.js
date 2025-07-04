@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const TechnoSchema = new mongoose.Schema(
   {
-    title: {
+    techno: {
       type: String,
       required: true,
       trim: true,
@@ -12,7 +12,7 @@ const TechnoSchema = new mongoose.Schema(
       trim: true,
       default: "",
     },
-    category: {
+    categorie: {
       type: String,
       default: "Langage / Framework",
       enum: ["Langage / Framework", "Outil de développement", "Design / Organisation"],
@@ -21,7 +21,7 @@ const TechnoSchema = new mongoose.Schema(
     level: {
       type: String,
       default: "Débutant",
-      enum: ["Débutant", "Maitrise", "Expertise"],
+      enum: ["Debutant", "Maitrise", "Expertise"],
       trim: true,
     },
   },

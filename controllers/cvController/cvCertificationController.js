@@ -53,19 +53,10 @@ export async function getCertification(req, res){
 export async function updateCertification(req, res){
     const {id} = req.params
     const {title, categorie, dateObtention, lieu, organisme} = req.body
-    let imgpath = null
-    if(req.file) {
-      imgpath = req.file.path
-    }
+    const updatingCertification = {title, categorie, dateObtention, lieu, organisme}
+    if(req.file) updatingCertification.urlImage = req.file.path
     try {
-        await Certification.findByIdAndUpdate(id, {
-            title,
-            urlImage: imgpath,
-            categorie,
-            dateObtention,
-            lieu,
-            organisme
-        })
+        await Certification.findByIdAndUpdate(id, updatingCertification)
         res.status(200).json({message: `Update certification sucess`})
     } catch (e) {
         res.status(500).json({ message: `Error in updateCertification: ${e.message}` });
