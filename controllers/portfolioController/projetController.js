@@ -2,7 +2,7 @@ import Projet from "../../models/Projet.js";
 
 export async function createProjet(req, res) {
   try {
-    const { intitule, synthese, year } = req.body;
+    const { intitule, synthese, year, technos } = req.body;
     let img = "";
     if (req.file) img = req.file;
     await Projet.create({
@@ -10,6 +10,7 @@ export async function createProjet(req, res) {
       synthese,
       year,
       img: img.path,
+      technos: JSON.parse(technos)
     });
     res.status(200).json({ message: "good" });
   } catch (e) {
@@ -49,8 +50,9 @@ export async function deleteProjet(req, res) {
 
 export async function updateProjet(req, res){
   const {id} = req.params
-  const {intitule, year, synthese} = req.body
-  const updatedProjet = {intitule, year, synthese}
+  const {intitule, year, synthese, technos} = req.body
+  console.log(technos)
+  const updatedProjet = {intitule, year, synthese, technos: JSON.parse(technos)}
   console.log(req.file)
   if(req.file) updatedProjet.img = req.file.path
   try{
@@ -60,3 +62,5 @@ export async function updateProjet(req, res){
     res.status(500).json({message: `Error in updateProjet : ${e.message}`})
   }
 }
+
+
