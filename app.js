@@ -13,6 +13,7 @@ import cvTechnoRouter from "./routers/cvRouters/cvTechnoRouter.js";
 import cvTitreAccrocheRouter from "./routers/cvRouters/cvTitreAccrocheRouter.js";
 import cvCertificationRouter from "./routers/cvRouters/cvCertificationRouter.js";
 import priseDeContactRouter from "./routers/priseDeContactRouter.js"
+import projetRouter from "./routers/portfolioRouters/projetRouter.js";
 import cors from "cors";
 
 dotenv.config();
@@ -36,9 +37,9 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+app.use("/uploads", express.static("uploads"));
 
 // routes du projet
-app.use("/uploads", express.static("uploads"));
 app.use("/api/auth", authentificationRouter);
 app.use("/api/cv/actions", cvActionRouter);
 app.use("/api/cv/certifications", cvCertificationRouter);
@@ -49,5 +50,6 @@ app.use("/api/cv/interets", cvInteretRouter);
 app.use("/api/cv/langues", cvLangueRouter);
 app.use("/api/cv/technos", cvTechnoRouter);
 app.use("/api/cv/titreAccroche", cvTitreAccrocheRouter);
+app.use("/api/portfolio/projet", projetRouter)
 app.use("/priseDeContact", priseDeContactRouter)
 
