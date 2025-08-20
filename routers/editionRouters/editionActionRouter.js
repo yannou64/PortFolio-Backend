@@ -1,10 +1,7 @@
 import express from "express";
 
-import {} from "../../controllers/cvController/cvActionController.js"
+import {} from "../../controllers/edtionController/editionActionController.js";
 
 const cvActionRouter = express.Router();
 
-export default cvActionRouter
-
-
-
+export default cvActionRouter;

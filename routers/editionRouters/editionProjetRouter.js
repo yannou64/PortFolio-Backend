@@ -5,7 +5,7 @@ import {
   getProjet,
   deleteProjet,
   updateProjet,
-} from "../controllers/portfolioController/projetController.js";
+} from "../../controllers/edtionController/editionProjetController.js";
 import multer from "multer";
 
 const projetRouter = express.Router();

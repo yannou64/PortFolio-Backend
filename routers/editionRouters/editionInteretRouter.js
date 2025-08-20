@@ -7,8 +7,8 @@ import {
   deleteInteretController,
   getInteretController,
   getInteretsController,
-  updateInteretController
-} from "../../controllers/cvController/cvInteretController.js";
+  updateInteretController,
+} from "../../controllers/edtionController/editionInteretController.js";
 
 const cvInteretRouter = express.Router();
 
@@ -18,4 +18,4 @@ cvInteretRouter.post("/", createInteretController);
 cvInteretRouter.delete("/:id", deleteInteretController);
 cvInteretRouter.put("/:id", updateInteretController);
 
-export default cvInteretRouter
+export default cvInteretRouter;

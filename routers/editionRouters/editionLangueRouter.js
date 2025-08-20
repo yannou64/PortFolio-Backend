@@ -8,7 +8,7 @@ import {
   deleteLangueController,
   getLangueController,
   updateLangueController,
-} from "../../controllers/cvController/cvLangueController.js";
+} from "../../controllers/edtionController/editionLangueController.js";
 
 const cvLangueRouter = express.Router();
 

@@ -7,7 +7,7 @@ import {
   deleteCertification,
   getCertification,
   updateCertification,
-} from "../../controllers/cvController/cvCertificationController.js";
+} from "../../controllers/edtionController/editionCertificationController.js";
 
 // Configuration de multer pour la récupération et traitement des images
 const storage = multer.diskStorage({

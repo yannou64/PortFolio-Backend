@@ -5,11 +5,11 @@ import authorizedRoles from "../../middleware/authorizedRole.js";
 import {
   getCoordonneesController,
   updateCoordonneesController,
-} from "../../controllers/cvController/cvCoordonneesController.js";
+} from "../../controllers/edtionController/editionCoordonneesController.js";
 
 const cvCoordonneesRouter = express.Router();
 
 cvCoordonneesRouter.get("/", getCoordonneesController);
 cvCoordonneesRouter.put("/:id", updateCoordonneesController);
 
-export default cvCoordonneesRouter
+export default cvCoordonneesRouter;

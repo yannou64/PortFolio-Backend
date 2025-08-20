@@ -12,6 +12,7 @@ export default function verifyToken(req, res, next) {
     try {
         const decoded = jwt.verify(token, process.env.SECRET)
         req.user = decoded
+        console.log(decoded)
         //On continu
         next()
     } catch (err) {

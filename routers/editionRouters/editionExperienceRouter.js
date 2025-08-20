@@ -1,7 +1,7 @@
 import express from "express";
 
-import {} from "../../controllers/cvController/cvExperienceController.js";
+import {} from "../../controllers/edtionController/editionExperienceController.js";
 
 const cvExperienceRouter = express.Router();
 
-export default cvExperienceRouter
+export default cvExperienceRouter;
