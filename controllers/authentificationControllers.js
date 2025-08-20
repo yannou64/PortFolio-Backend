@@ -41,15 +41,16 @@ export async function loginController(req, res) {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) return res.status(400).json({ message: "bad connection parameters" });
 
-    // Le user existe, on génère un token qu'on lui communique
+    // Le user existe, on génère un token qu'on lui communique, comme j'utilise jwt je rajoute un payload mais il sera inutile en front avec httponly
     const token = jwt.sign({ username: user.username, role: user.role }, process.env.SECRET, { expiresIn: "1h" });
     
+    // Réponse
     res.cookie("token", token, {
-      httpOnly: false,
+      httpOnly: true,
       secure: false,
       sameSite: 'lax',
+      path: '/'
     });
-    // Réponse
     res.status(200).json({ message: "login success"});
   } catch (e) {
     res.status(500).json({ message: `Problem whith login the user : ${e.message}` });
@@ -58,13 +59,10 @@ export async function loginController(req, res) {
 
 export async function logoutController(req, res) {
   try {
-    // vérifier la présence du token
+    // Récupérer le token
     const token = req.cookies.token;
-    if (!token) return res.status(400).json({ message: "No token provided" });
-  
     // Nettoyer le cookie
     res.clearCookie("token")
-  
     // Réponse
     res.status(200).json({ message: "logout successful" });
 

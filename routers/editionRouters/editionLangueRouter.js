@@ -12,10 +12,10 @@ import {
 
 const cvLangueRouter = express.Router();
 
-cvLangueRouter.post("/", verifyToken, authorizedRoles("admin"), createLangueController);
+cvLangueRouter.post("/", createLangueController);
 cvLangueRouter.get("/", getLanguesController);
-cvLangueRouter.delete("/:id", verifyToken, authorizedRoles("admin"), deleteLangueController);
-cvLangueRouter.get("/:id", verifyToken, authorizedRoles("admin"), getLangueController);
-cvLangueRouter.put("/:id", verifyToken, authorizedRoles("admin"), updateLangueController);
+cvLangueRouter.delete("/:id", deleteLangueController);
+cvLangueRouter.get("/:id", getLangueController);
+cvLangueRouter.put("/:id", updateLangueController);
 
 export default cvLangueRouter;

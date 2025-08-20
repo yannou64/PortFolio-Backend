@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage})
 const cvTechnoRouter = express.Router()
 
-cvTechnoRouter.post("/", verifyToken, upload.single("logo"), createTechno)
+cvTechnoRouter.post("/",upload.single("logo"), createTechno)
 cvTechnoRouter.get("/", getAllTechnos)
 cvTechnoRouter.delete("/:id", deleteTechno)
 cvTechnoRouter.put("/:id", upload.single("logo"), updateTechno)

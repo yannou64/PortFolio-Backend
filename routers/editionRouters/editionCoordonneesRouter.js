@@ -10,6 +10,6 @@ import {
 const cvCoordonneesRouter = express.Router();
 
 cvCoordonneesRouter.get("/", getCoordonneesController);
-cvCoordonneesRouter.put("/:id", verifyToken, authorizedRoles("admin"), updateCoordonneesController);
+cvCoordonneesRouter.put("/:id", updateCoordonneesController);
 
 export default cvCoordonneesRouter

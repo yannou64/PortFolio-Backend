@@ -12,10 +12,10 @@ import {
 
 const cvInteretRouter = express.Router();
 
-cvInteretRouter.get("/:id",verifyToken, authorizedRoles("admin"), getInteretController);
+cvInteretRouter.get("/:id", getInteretController);
 cvInteretRouter.get("/", getInteretsController);
-cvInteretRouter.post("/", verifyToken, authorizedRoles("admin"), createInteretController);
-cvInteretRouter.delete("/:id", verifyToken, authorizedRoles("admin"), deleteInteretController);
-cvInteretRouter.put("/:id", verifyToken, authorizedRoles("admin"), updateInteretController);
+cvInteretRouter.post("/", createInteretController);
+cvInteretRouter.delete("/:id", deleteInteretController);
+cvInteretRouter.put("/:id", updateInteretController);
 
 export default cvInteretRouter

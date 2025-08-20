@@ -3,17 +3,17 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import connectionBDD from "./config/dbConnecion.js";
 import authentificationRouter from "./routers/authentificationRouter.js";
-import cvActionRouter from "./routers/cvRouters/cvActionRouter.js";
-import cvCompetenceRouter from "./routers/cvRouters/cvCompetenceRouter.js"
-import cvCoordonneesRouter from "./routers/cvRouters/cvCoordonneesRouter.js";
-import cvExperienceRouter from "./routers/cvRouters/cvExperienceRouter.js";
-import cvInteretRouter from "./routers/cvRouters/cvInteretRouter.js";
-import cvLangueRouter from "./routers/cvRouters/cvLangueRouter.js";
-import cvTechnoRouter from "./routers/cvRouters/cvTechnoRouter.js";
-import cvTitreAccrocheRouter from "./routers/cvRouters/cvTitreAccrocheRouter.js";
-import cvCertificationRouter from "./routers/cvRouters/cvCertificationRouter.js";
-import priseDeContactRouter from "./routers/priseDeContactRouter.js"
-import projetRouter from "./routers/portfolioRouters/projetRouter.js";
+import editionActionRouter from "./routers/editionRouters/editionActionRouter.js";
+import editionCompetenceRouter from "./routers/editionRouters/editionCompetenceRouter.js";
+import editionCoordonneesRouter from "./routers/editionRouters/editionCoordonneesRouter.js";
+import editionExperienceRouter from "./routers/editionRouters/editionExperienceRouter.js";
+import editionInteretRouter from "./routers/editionRouters/editionInteretRouter.js";
+import editionLangueRouter from "./routers/editionRouters/editionLangueRouter.js";
+import editionTechnoRouter from "./routers/editionRouters/editionTechnoRouter.js";
+import editionTitreAccrocheRouter from "./routers/editionRouters/editionTitreAccrocheRouter.js";
+import editionCertificationRouter from "./routers/editionRouters/editionCertificationRouter.js";
+import priseDeContactRouter from "./routers/priseDeContactRouter.js";
+import projetRouter from "./routers/projetRouter.js";
 import cors from "cors";
 
 dotenv.config();
@@ -41,15 +41,14 @@ app.use("/uploads", express.static("uploads"));
 
 // routes du projet
 app.use("/api/auth", authentificationRouter);
-app.use("/api/cv/actions", cvActionRouter);
-app.use("/api/cv/certifications", cvCertificationRouter);
-app.use("/api/cv/competences", cvCompetenceRouter);
-app.use("/api/cv/coordonnees", cvCoordonneesRouter);
-app.use("/api/cv/experiences", cvExperienceRouter);
-app.use("/api/cv/interets", cvInteretRouter);
-app.use("/api/cv/langues", cvLangueRouter);
-app.use("/api/cv/technos", cvTechnoRouter);
-app.use("/api/cv/titreAccroche", cvTitreAccrocheRouter);
-app.use("/api/portfolio/projet", projetRouter)
-app.use("/priseDeContact", priseDeContactRouter)
-
+app.use("/api/edition/actions", editionActionRouter);
+app.use("/api/edition/certifications", editionCertificationRouter);
+app.use("/api/edition/competences", editionCompetenceRouter);
+app.use("/api/edition/coordonnees", editionCoordonneesRouter);
+app.use("/api/edition/experiences", editionExperienceRouter);
+app.use("/api/edition/interets", editionInteretRouter);
+app.use("/api/edition/langues", editionLangueRouter);
+app.use("/api/edition/technos", editionTechnoRouter);
+app.use("/api/edition/titreAccroche", editionTitreAccrocheRouter);
+app.use("/api/portfolio/projet", projetRouter);
+app.use("/priseDeContact", priseDeContactRouter);

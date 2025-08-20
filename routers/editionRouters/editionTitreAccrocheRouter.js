@@ -6,6 +6,6 @@ import authorizedRoles from "../../middleware/authorizedRole.js"
 const cvTitreAccrocheRouter = express.Router()
 
 cvTitreAccrocheRouter.get("/", getTitreAccrocheController)
-cvTitreAccrocheRouter.put("/:id", verifyToken, authorizedRoles("admin"), updateTitreAccrocheController)
+cvTitreAccrocheRouter.put("/:id", updateTitreAccrocheController)
 
 export default cvTitreAccrocheRouter 
