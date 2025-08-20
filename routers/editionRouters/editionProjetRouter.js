@@ -7,6 +7,8 @@ import {
   updateProjet,
 } from "../../controllers/edtionController/editionProjetController.js";
 import multer from "multer";
+import verifyToken from "../../middleware/verifyToken.js";
+import authorizedRoles from "../../middleware/authorizedRole.js";
 
 const projetRouter = express.Router();
 
@@ -22,10 +24,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-projetRouter.post("/", upload.single("img"), createProjet);
+projetRouter.post("/", verifyToken, upload.single("img"), createProjet);
 projetRouter.get("/", getAllProjet);
 projetRouter.get("/:id", getProjet);
-projetRouter.delete("/:id", deleteProjet);
-projetRouter.put("/:id", upload.single("img"), updateProjet);
+projetRouter.delete("/:id", verifyToken, authorizedRoles("admin"), deleteProjet);
+projetRouter.put("/:id", verifyToken, authorizedRoles("admin"), upload.single("img"), updateProjet);
 
 export default projetRouter;

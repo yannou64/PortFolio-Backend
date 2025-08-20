@@ -10,6 +10,7 @@ import editionTitreAccrocheRouter from "./editionRouters/editionTitreAccrocheRou
 import editionCertificationRouter from "./editionRouters/editionCertificationRouter.js";
 import editionProjetRouter from "./editionRouters/editionProjetRouter.js";
 
+
 const editionRouter = express.Router()
 
 editionRouter.use("/actions", editionActionRouter);

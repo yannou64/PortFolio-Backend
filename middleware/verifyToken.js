@@ -6,7 +6,7 @@ export default function verifyToken(req, res, next) {
     // On vérifie que le client possède un token
     const token = req.cookies.token
     if(!token) {
-        res.status(401).json({message: `You are not allowed to access token : ${req.cookies}`})
+        return res.status(401).json({message: `You are not allowed to access token : ${req.cookies}`})
     }
     // On vérifie la validité du token
     try {

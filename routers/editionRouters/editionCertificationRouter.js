@@ -1,6 +1,5 @@
 import express from "express";
 import multer from "multer";
-import path from "path";
 import {
   getAllCertifications,
   createCertification,
@@ -8,6 +7,8 @@ import {
   getCertification,
   updateCertification,
 } from "../../controllers/edtionController/editionCertificationController.js";
+import verifyToken from "../../middleware/verifyToken.js";
+import authorizedRoles from "../../middleware/authorizedRole.js";
 
 // Configuration de multer pour la récupération et traitement des images
 const storage = multer.diskStorage({
@@ -24,9 +25,9 @@ const upload = multer({ storage });
 const cvCertificationRouter = express.Router();
 
 cvCertificationRouter.get("/", getAllCertifications);
-cvCertificationRouter.post("/", upload.single("imageUrl"), createCertification);
-cvCertificationRouter.delete("/:id", deleteCertification);
+cvCertificationRouter.post("/", verifyToken, upload.single("imageUrl"), createCertification);
+cvCertificationRouter.delete("/:id", verifyToken, authorizedRoles("admin"), deleteCertification);
 cvCertificationRouter.get("/:id", getCertification);
-cvCertificationRouter.put("/:id", upload.single("imageUrl"), updateCertification);
+cvCertificationRouter.put("/:id", verifyToken, authorizedRoles("admin"), upload.single("imageUrl"), updateCertification);
 
 export default cvCertificationRouter;

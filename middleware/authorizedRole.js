@@ -2,7 +2,7 @@ export default function authorizedRoles(...allowedRoles){
     return (req, res, next) => {
 
         if (!req.user || !req.user.role) {
-            return res.status(401).json({ message: "User not authenticated" });
+            return res.status(401).json({ message: "User not authentificated" });
         }
 
         const userRole = req.user.role;
