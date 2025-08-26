@@ -2,14 +2,13 @@ import Projet from "../../models/Projet.js";
 
 export async function createProjet(req, res) {
   try {
-    const { intitule, synthese, year, technos } = req.body;
-    let img = "";
-    if (req.file) img = req.file;
+    const { titre, description, technos } = req.body;
+    let image = "";
+    if (req.file) image = req.file;
     await Projet.create({
-      intitule,
-      synthese,
-      year,
-      img: img.path,
+      titre,
+      description,
+      image: image.path,
       technos: JSON.parse(technos)
     });
     res.status(200).json({ message: "good" });
@@ -50,11 +49,9 @@ export async function deleteProjet(req, res) {
 
 export async function updateProjet(req, res){
   const {id} = req.params
-  const {intitule, year, synthese, technos} = req.body
-  console.log(technos)
-  const updatedProjet = {intitule, year, synthese, technos: JSON.parse(technos)}
-  console.log(req.file)
-  if(req.file) updatedProjet.img = req.file.path
+  const {titre, description, technos} = req.body
+  const updatedProjet = {titre, description, technos: JSON.parse(technos)}
+  if(req.file) updatedProjet.image = req.file.path
   try{
     await Projet.findByIdAndUpdate(id, updatedProjet)
     res.status(200).json({message: `update success`})

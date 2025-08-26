@@ -1,21 +1,17 @@
 import mongoose from "mongoose";
 
 const ProjetSchema = new mongoose.Schema({
-  intitule: {
+  titre: {
     type: String,
     required: true,
     trim: true,
   },
-  synthese: {
+  description: {
     type: String,
     required: true,
     trim: true,
   },
-  year: {
-    type: Number,
-    required: true,
-  },
-  img: {
+  image: {
     type: String,
   },
   technos: [

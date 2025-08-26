@@ -21,9 +21,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 const cvTechnoRouter = express.Router();
 
-cvTechnoRouter.post("/", verifyToken, upload.single("logo"), createTechno);
+cvTechnoRouter.post("/", verifyToken, upload.single("image"), createTechno);
 cvTechnoRouter.get("/", getAllTechnos);
 cvTechnoRouter.delete("/:id", verifyToken, authorizedRoles("admin"), deleteTechno);
-cvTechnoRouter.put("/:id", verifyToken, authorizedRoles("admin"), upload.single("logo"), updateTechno);
+cvTechnoRouter.put("/:id", verifyToken, authorizedRoles("admin"), upload.single("image"), updateTechno);
 
 export default cvTechnoRouter;

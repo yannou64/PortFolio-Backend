@@ -1,15 +1,17 @@
 import Techno from "../../models/Techno.js";
 
 export async function createTechno(req, res) {
-  const { techno, categorie, level } = req.body;
+  const { titre, categorie, niveau, alt_img } = req.body;
+  console.log(alt_img)
   let logoPath = "";
   if (req.file) logoPath = req.file.path;
   try {
     await Techno.create({
-      techno,
+      titre,
+      image: logoPath,
+      alt_image: alt_img,
       categorie,
-      level,
-      logo: logoPath,
+      niveau,
     });
     res.status(200).json({ message: `creation de techno success` });
   } catch (e) {
@@ -39,9 +41,9 @@ export async function deleteTechno(req, res) {
 
 export async function updateTechno(req, res) {
   const { id } = req.params;
-  const { level, categorie, techno } = req.body;
-  const updatingTechno = {level, categorie, techno}
-  if(req.file) updatingTechno.logo = req.file.path
+  const { niveau, categorie, titre, alt_img } = req.body;
+  const updatingTechno = {niveau, categorie, titre, alt_img}
+  if(req.file) updatingTechno.image = req.file.path
 
   try {
     await Techno.findByIdAndUpdate(id, updatingTechno)

@@ -2,12 +2,17 @@ import mongoose from "mongoose";
 
 const TechnoSchema = new mongoose.Schema(
   {
-    techno: {
+    titre: {
       type: String,
       required: true,
       trim: true,
     },
-    logo: {
+    image: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    alt_img: {
       type: String,
       trim: true,
       default: "",
@@ -18,7 +23,7 @@ const TechnoSchema = new mongoose.Schema(
       enum: ["Langage / Framework", "Outil de développement", "Design / Organisation"],
       trim: true,
     },
-    level: {
+    niveau: {
       type: String,
       default: "Débutant",
       enum: ["Debutant", "Maitrise", "Expertise"],
