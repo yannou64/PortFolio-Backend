@@ -2,14 +2,16 @@ import Projet from "../../models/Projet.js";
 
 export async function createProjet(req, res) {
   try {
-    const { titre, description, technos } = req.body;
+    const { titre_projet, description_projet, technos_projet, is_favoris_projet, alt_img_projet } = req.body;
     let image = "";
     if (req.file) image = req.file;
     await Projet.create({
-      titre,
-      description,
-      image: image.path,
-      technos: JSON.parse(technos)
+      titre_projet,
+      image_projet: image.path,
+      alt_img_projet,
+      description_projet,
+      is_favoris_projet,
+      technos_projet: JSON.parse(technos_projet),
     });
     res.status(200).json({ message: "good" });
   } catch (e) {
@@ -47,17 +49,22 @@ export async function deleteProjet(req, res) {
   }
 }
 
-export async function updateProjet(req, res){
-  const {id} = req.params
-  const {titre, description, technos} = req.body
-  const updatedProjet = {titre, description, technos: JSON.parse(technos)}
-  if(req.file) updatedProjet.image = req.file.path
-  try{
-    await Projet.findByIdAndUpdate(id, updatedProjet)
-    res.status(200).json({message: `update success`})
-  } catch(e) {
-    res.status(500).json({message: `Error in updateProjet : ${e.message}`})
+export async function updateProjet(req, res) {
+  const { id } = req.params;
+  const { titre_projet, description_projet, technos_projet, is_favoris_projet, alt_img_projet } = req.body;
+  console.log(req.body)
+  const updatedProjet = {
+    titre_projet,
+    description_projet,
+    technos_projet: JSON.parse(technos_projet),
+    is_favoris_projet,
+    alt_img_projet,
+  };
+  if (req.file) updatedProjet.image_projet = req.file.path;
+  try {
+    await Projet.findByIdAndUpdate(id, updatedProjet);
+    res.status(200).json({ message: `update success` });
+  } catch (e) {
+    res.status(500).json({ message: `Error in updateProjet : ${e.message}` });
   }
 }
-
-

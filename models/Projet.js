@@ -1,20 +1,29 @@
 import mongoose from "mongoose";
 
 const ProjetSchema = new mongoose.Schema({
-  titre: {
+  titre_projet: {
     type: String,
     required: true,
     trim: true,
   },
-  description: {
+  image_projet: {
+    type: String,
+  },
+  alt_img_projet: {
     type: String,
     required: true,
     trim: true,
   },
-  image: {
+  description_projet: {
     type: String,
+    required: true,
+    trim: true,
   },
-  technos: [
+  is_favoris_projet: {
+    type: Boolean,
+    default: false
+  },
+  technos_projet: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Techno",

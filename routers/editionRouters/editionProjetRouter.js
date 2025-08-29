@@ -24,10 +24,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-projetRouter.post("/", verifyToken, upload.single("img"), createProjet);
+projetRouter.post("/", verifyToken, upload.single("image_projet"), createProjet);
 projetRouter.get("/", getAllProjet);
 projetRouter.get("/:id", getProjet);
 projetRouter.delete("/:id", verifyToken, authorizedRoles("admin"), deleteProjet);
-projetRouter.put("/:id", verifyToken, authorizedRoles("admin"), upload.single("img"), updateProjet);
+projetRouter.put("/:id", verifyToken, authorizedRoles("admin"), upload.single("image_projet"), updateProjet);
 
 export default projetRouter;
