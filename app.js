@@ -7,7 +7,6 @@ import priseDeContactRouter from "./routers/priseDeContactRouter.js";
 import editionRouter from "./routers/editionRouter.js";
 import cors from "cors";
 
-
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,21 +14,35 @@ const port = process.env.PORT || 3000;
 // Connection à la bdd
 connectionBDD();
 
+// Pour la production sur render/heroku/vercel à mettre avant logique protocole/cookies
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", 1);
+}
+
 // Lancement du serveur
 app.listen(port, () => {
   console.log(`Le serveur est démarré sur http://localhost:${port}`);
 });
 
+// santé
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", time: new Date().toISOString() });
+});
+
 // middlewares de préparation de la requête
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
+
+// Sécurité
+// Les différentes origin autorisées, avec filtre si n'est pas défini dans .env
+const originAuthorise = ["http://localhost:5173", process.env.FRONTEND_ORIGIN].filter(Boolean);
+app.use(
+  cors({
+    origin: originAuthorise,
+    credentials: true,
+  })
+);
 
 // routes du projet
 app.use("/api/auth", authentificationRouter);

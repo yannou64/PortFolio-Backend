@@ -46,9 +46,8 @@ export async function loginController(req, res) {
     // Réponse
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      path: "/",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV ? "none" : "lax",
     });
     res.status(200).json({ message: "login success" });
   } catch (e) {
