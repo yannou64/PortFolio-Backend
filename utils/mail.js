@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-export default async function mail(fromWho, contacter, sujet, message) {
+export default async function mail(contacter, message) {
   // Création du transporter
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -14,10 +14,9 @@ export default async function mail(fromWho, contacter, sujet, message) {
   const email = {
     to: process.env.MAIL_USER,
     from: process.env.MAIL_USER,
-    subject: `Message du Portfolio: ${sujet}`,
+    subject: `Message du Portfolio`,
     html: `
-            <h2 style="color: red;">Quelqu'un souhaite me contacter via le portfolio</h2>
-            <p><strong>Envoyé par : </strong> ${fromWho}</p>
+            <h2 style="color: red;">Message via portfolio</h2>
             <p><strong>Contenu du message : </strong> ${message}</p>
             <p><strong>Pour recontacter</strong> : ${contacter}</p>
         `,

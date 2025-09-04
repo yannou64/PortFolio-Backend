@@ -5,6 +5,7 @@ import {
   getProjet,
   deleteProjet,
   updateProjet,
+  getProjetsFavoris
 } from "../../controllers/edtionController/editionProjetController.js";
 import multer from "multer";
 import verifyToken from "../../middleware/verifyToken.js";
@@ -26,6 +27,7 @@ const upload = multer({ storage });
 
 projetRouter.post("/", verifyToken, upload.single("image_projet"), createProjet);
 projetRouter.get("/", getAllProjet);
+projetRouter.get("/favoris", getProjetsFavoris);
 projetRouter.get("/:id", getProjet);
 projetRouter.delete("/:id", verifyToken, authorizedRoles("admin"), deleteProjet);
 projetRouter.put("/:id", verifyToken, authorizedRoles("admin"), upload.single("image_projet"), updateProjet);

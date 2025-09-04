@@ -2,6 +2,7 @@ import express from "express";
 import {
   createTechno,
   getAllTechnos,
+  getAllTechnosByCategories,
   deleteTechno,
   updateTechno,
 } from "../../controllers/edtionController/editionTechnoController.js";
@@ -23,6 +24,7 @@ const cvTechnoRouter = express.Router();
 
 cvTechnoRouter.post("/", verifyToken, upload.single("image"), createTechno);
 cvTechnoRouter.get("/", getAllTechnos);
+cvTechnoRouter.get("/byCategories", getAllTechnosByCategories)
 cvTechnoRouter.delete("/:id", verifyToken, authorizedRoles("admin"), deleteTechno);
 cvTechnoRouter.put("/:id", verifyToken, authorizedRoles("admin"), upload.single("image"), updateTechno);
 

@@ -12,7 +12,7 @@ const TechnoSchema = new mongoose.Schema(
       trim: true,
       default: "",
     },
-    alt_img: {
+    alt_imag: {
       type: String,
       trim: true,
       default: "",

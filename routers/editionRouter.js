@@ -22,6 +22,6 @@ editionRouter.use("/interets", editionInteretRouter);
 editionRouter.use("/langues", editionLangueRouter);
 editionRouter.use("/technos", editionTechnoRouter);
 editionRouter.use("/titreAccroche", editionTitreAccrocheRouter);
-editionRouter.use("/projet", editionProjetRouter);
+editionRouter.use("/projets", editionProjetRouter);
 
 export default editionRouter
