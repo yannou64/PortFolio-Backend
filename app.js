@@ -19,6 +19,14 @@ if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
 }
 
+// Sécurité forcer le https en prod
+app.use((req, res, next) => { 
+	if (process.env.NODE_ENV === "production" && req.header('x-forwarded-proto') !== 'https') { 
+		return res.redirect(`https://${req.header('host')}${req.url}`) 
+	} 
+	next() 
+})
+
 // Lancement du serveur
 app.listen(port, () => {
   console.log(`Le serveur est démarré sur http://localhost:${port}`);
