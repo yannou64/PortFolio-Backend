@@ -2,7 +2,6 @@ import Techno from "../../models/Techno.js";
 
 export async function createTechno(req, res) {
   const { titre, categorie, niveau, alt_img } = req.body;
-  console.log(alt_img);
   let logoPath = "";
   if (req.file) logoPath = req.file.path;
   try {
@@ -48,7 +47,6 @@ export async function getAllTechnosByCategories(req, res) {
       },
       { $sort: { categorie: 1 } }, // ordre des groupes
     ]);
-    console.log(data)
     res.status(200).json({ message: "getAllTechnosByCategories request successfull", data });
   } catch (e) {
     res.status(500).json({ message: `CatchError backend in getAllTechnosByCategories:  ${e.message}` });

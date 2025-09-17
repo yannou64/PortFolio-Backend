@@ -5,7 +5,7 @@ import {
   getProjet,
   deleteProjet,
   updateProjet,
-  getProjetsFavoris
+  getProjetsFavoris,
 } from "../../controllers/edtionController/editionProjetController.js";
 import multer from "multer";
 import verifyToken from "../../middleware/verifyToken.js";

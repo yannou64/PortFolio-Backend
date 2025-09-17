@@ -54,7 +54,6 @@ export async function getProjetsFavoris(req, res) {
         },
       },
     ]);
-    console.log(data)
     res.status(200).json({ message: "all is good for getAllProjet", data });
   } catch (e) {
     res.status(500).json({ message: `Error in getAllProjet : ${e.message}` });

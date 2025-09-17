@@ -7,6 +7,7 @@ import priseDeContactRouter from "./routers/priseDeContactRouter.js";
 import editionRouter from "./routers/editionRouter.js";
 import helmet from "helmet";
 import cors from "cors";
+import rateLimit from "express-rate-limit";
 
 dotenv.config();
 const app = express();
@@ -21,7 +22,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Sécurité
-// Sécurité forcer le https en prod
+// Sécurité : forcer le https en prod
 app.use((req, res, next) => {
   if (process.env.NODE_ENV === "production" && req.header("x-forwarded-proto") !== "https") {
     return res.redirect(`https://${req.header("host")}${req.url}`);
@@ -29,7 +30,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Ajout des entêtes de sécurité et du contentSecurityPolicy, attention si j'utilise des CDN il faudra les déclarer
+// Sécurité : Ajout des entêtes de sécurité et du contentSecurityPolicy, attention si j'utilise des CDN il faudra les déclarer
 app.use(
   helmet.contentSecurityPolicy({
     useDefaults: true,
@@ -45,7 +46,7 @@ app.use(
   })
 );
 
-// Les différentes origin autorisées, avec filtre si n'est pas défini dans .env
+// Sécurtié : CORS Les différentes origin autorisées, avec filtre si n'est pas défini dans .env
 const originAuthorise = ["http://localhost:5173", process.env.FRONTEND_ORIGIN].filter(Boolean);
 app.use(
   cors({
@@ -53,6 +54,17 @@ app.use(
     credentials: true,
   })
 );
+
+// Sécurité : Rate limit
+// Limite : max 100 requêtes par IP toutes les 15 minutes
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000, // 100 requêtes
+  message: "Trop de requêtes, réessayez plus tard.",
+});
+// On applique le rate limit à toutes les routes
+app.use(limiter);
+
 // Lancement du serveur
 app.listen(port, () => {
   console.log(`Le serveur est démarré sur http://localhost:${port}`);
