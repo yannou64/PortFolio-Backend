@@ -1,10 +1,24 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import mdpValidation from "../utils/mdpValidation.js";
 
 export async function registerController(req, res) {
-  const { identifiant, mdp, role } = req.body;
-  if (!identifiant || !mdp) return res.status(400).json({ message: "Missing data" });
+  let { identifiant, mdp, role } = req.body;
+  
+  // validation brut
+  if (!identifiant || !mdp || typeof identifiant !== "string" || typeof mdp !== "string")
+    return res.status(400).json({ message: "bad register parameters" });
+
+  // Normalisation
+  identifiant = identifiant.trim()
+
+  // validation métier
+  if(!mdpValidation.test(mdp))
+    return res.status(400).json( { message: "bad register parameters"})
+
+  // sanitization
+  identifiant = identifiant.replace(/[<>]/g, "")
 
   try {
     // On vérifie si le user existe déjà
@@ -29,12 +43,24 @@ export async function registerController(req, res) {
 }
 
 export async function loginController(req, res) {
-  const { identifiant, mdp } = req.body;
-  if (!identifiant || !mdp) return res.status(400).json({ message: "Missing data" });
+  let { identifiant, mdp } = req.body;
+
+  // Validation brut
+  if (!identifiant || !mdp || typeof identifiant !== "string" || typeof mdp !== "string")
+    return res.status(400).json({ message: "bad connection parameter" });
+
+  // Normalisation
+  identifiant = identifiant.trim();
+
+  // Validation métier
+  if (!mdpValidation.test(mdp)) return res.status(400).json({ message: "bad connection parameters" });
+
+  // Sanitization
+  identifiant = identifiant.replace(/[<>]/g, ""); // supprimer d'éventuelles balise html (pas trés utile, car pour l'instant je ne l'affiche pas côté front)
 
   try {
     // On récupère le user dans la bdd et on vérifie que le mot de passe est bon
-    const user = await User.findOne({ identifiant });
+    const user = await User.findOne({ identifiant }); // L'utilisatin de mongoose avec User.schema rajoute un controle sur les données
     if (!user) return res.status(401).json({ message: "bad connection parameters" });
 
     const isPasswordValid = await bcrypt.compare(mdp, user.mdp);
@@ -53,7 +79,8 @@ export async function loginController(req, res) {
     });
     res.status(200).json({ message: "login success" });
   } catch (e) {
-    res.status(500).json({ message: `Problem whith login the user : ${e.message}` });
+    console.error("Login Error: ", e);
+    res.status(500).json({ message: `Internal server error` });
   }
 }
 
@@ -75,8 +102,8 @@ export async function checkIfAdminController(req, res) {
     const decoded = jwt.verify(token, process.env.SECRET);
     res.status(200).json({ message: "User already auth admin", auth: true });
   } catch (e) {
-    if(e.name === 'TokenExpiredError'){
-      return res.status(401).json({ message: "Session expired", auth: false})
+    if (e.name === "TokenExpiredError") {
+      return res.status(401).json({ message: "Session expired", auth: false });
     }
     res.status(500).json({ message: "Error during checkIfAdmin" });
   }
