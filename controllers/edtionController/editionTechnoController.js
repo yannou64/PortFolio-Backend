@@ -72,7 +72,6 @@ export async function deleteTechno(req, res) {
 }
 
 export async function updateTechno(req, res) {
-  console.log("test");
   const { id } = req.params;
   let { niveau, categorie, titre, alt_img } = req.body;
 
@@ -83,7 +82,7 @@ export async function updateTechno(req, res) {
   if (req.file) updatingTechno.image = req.file.path;
 
   try {
-    await Techno.findByIdAndUpdate(id, updatingTechno);
+    await Techno.findByIdAndUpdate(id, updatingTechno, { runValidators: true });
     res.status(200).json({ message: "Update Success" });
   } catch (e) {
     console.error(`CatchError in updatetechno : ${e}`);

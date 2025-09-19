@@ -1,4 +1,8 @@
 import mongoose from "mongoose";
+import { maxLength } from "zod";
+
+mongoose.set("sanitizeFilter", true); // nettoie les clés des filtres ($, .)
+mongoose.set("strictQuery", true); // rejette les chemins inconnus dans les filtres
 
 const TechnoSchema = new mongoose.Schema(
   {
@@ -6,6 +10,7 @@ const TechnoSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      maxLength: 100,
     },
     image: {
       type: String,
@@ -18,6 +23,7 @@ const TechnoSchema = new mongoose.Schema(
       trim: true,
       default: "",
       required: true,
+      maxLength: 100
     },
     categorie: {
       type: String,
@@ -25,6 +31,7 @@ const TechnoSchema = new mongoose.Schema(
       enum: ["Langage / Framework", "Outil de développement", "Design / Organisation"],
       trim: true,
       required: true,
+      maxLength: 50,
     },
     niveau: {
       type: String,
@@ -32,9 +39,10 @@ const TechnoSchema = new mongoose.Schema(
       enum: ["Debutant", "Maitrise", "Expertise"],
       trim: true,
       required: true,
+      maxLength: 50,
     },
   },
-  { timestamps: true }
+  { timestamps: true, strict: "throw" }
 );
 const Techno = mongoose.model("Techno", TechnoSchema);
 

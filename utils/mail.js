@@ -25,7 +25,6 @@ export default async function mail(contacter, message) {
   // Envoie de l'email
   try {
     const info = await transporter.sendMail(email);
-    console.log("Email envoyé :", info);
     return {success: true, info}
   } catch (error) {
     console.error("Erreur de mail :", error);
