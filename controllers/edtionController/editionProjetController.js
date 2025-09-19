@@ -43,7 +43,7 @@ export async function getProjetsFavoris(req, res) {
     // const data = await Projet.find();
     const data = await Projet.aggregate([
       {
-        $match: { is_favoris_projet: true }
+        $match: { is_favoris_projet: true },
       },
       {
         $lookup: {

@@ -1,27 +1,33 @@
 import Techno from "../../models/Techno.js";
 
 export async function createTechno(req, res) {
-  const { titre, categorie, niveau, alt_img } = req.body;
+  let { titre, categorie, niveau, alt_img } = req.body;
+  ({ titre, categorie, niveau, alt_img } = checkDataIntegrity(titre, categorie, niveau, alt_img));
+
+  // On récupère l'url du fichier image récupérer par multer s'il existe
   let logoPath = "";
   if (req.file) logoPath = req.file.path;
+
+  // On créé notre enregistrement et on envoi la réponse
   try {
-    await Techno.create({
+    await Techno.insertOne({
       titre,
       image: logoPath,
-      alt_image: alt_img,
+      alt_img,
       categorie,
       niveau,
     });
-    res.status(200).json({ message: `creation de techno success` });
+    res.status(200).json({ message: "Sucess create techno" });
   } catch (e) {
-    res.status(500).json({ message: `Erreur dans createTechno : ${e.message}` });
+    console.error(`Error in createTechno : `, e);
+    res.status(500).json({ message: `Error in createTechno` });
   }
 }
 
 export async function getAllTechnos(req, res) {
   try {
     let data = await Techno.find();
-    res.status(200).json({ message: `getAllTechnos success`, data });
+    res.status(200).json({ data });
   } catch (e) {
     res.status(500).json({ message: `CatchError backend in getAllTechnos : ${e.message}` });
   }
@@ -49,7 +55,8 @@ export async function getAllTechnosByCategories(req, res) {
     ]);
     res.status(200).json({ message: "getAllTechnosByCategories request successfull", data });
   } catch (e) {
-    res.status(500).json({ message: `CatchError backend in getAllTechnosByCategories:  ${e.message}` });
+    console.error(`CatchError backend in getAllTechnosByCategories:  ${e.message}`);
+    res.status(500).json({ message: "Error with getAllTechnosByCategorie" });
   }
 }
 
@@ -57,22 +64,60 @@ export async function deleteTechno(req, res) {
   const { id } = req.params;
   try {
     await Techno.findByIdAndDelete(id);
-    res.status(200).json({ message: `Backend: deleteTechno success` });
+    res.status(200).json({ message: "Delete success" });
   } catch (e) {
-    res.status(500).json({ message: `CatchError backend in deleteTechnos : ${e.message}` });
+    console.error(`CatchError backend in deleteTechnos : ${e.message}`);
+    res.status(500).json({ message: "Error with deleteTechno" });
   }
 }
 
 export async function updateTechno(req, res) {
+  console.log("test");
   const { id } = req.params;
-  const { niveau, categorie, titre, alt_img } = req.body;
+  let { niveau, categorie, titre, alt_img } = req.body;
+
+  // Controle de sécurité des données
+  ({ titre, categorie, niveau, alt_img } = checkDataIntegrity(titre, categorie, niveau, alt_img));
+
   const updatingTechno = { niveau, categorie, titre, alt_img };
   if (req.file) updatingTechno.image = req.file.path;
 
   try {
     await Techno.findByIdAndUpdate(id, updatingTechno);
-    res.status(200).json({ message: `Backend: updateTechno success` });
+    res.status(200).json({ message: "Update Success" });
   } catch (e) {
-    res.status(500).json({ message: `CatchError backend in updatetechno : ${e.message}` });
+    console.error(`CatchError backend in updatetechno : ${e.message}`);
+    res.status(500).json({ message: "Error whith updateTechno" });
   }
+}
+
+function checkDataIntegrity(titre, categorie, niveau, alt_img) {
+  // Normalisation et Sanitization
+  function normamliseAndSanitize(data) {
+    if (typeof data !== "string") return null;
+    return data
+      .trim()
+      .replace(/<\/?[^>]+(>|$)/g, "") // retire les balises html, complément à mongoose
+      .replace(/[\x00-\x1F\x7F]/g, ""); // retire les caractères de contrôle invisible, complément à mongoose
+  }
+
+  titre = normamliseAndSanitize(titre);
+  categorie = normamliseAndSanitize(categorie);
+  niveau = normamliseAndSanitize(niveau);
+  alt_img = normamliseAndSanitize(alt_img);
+
+  // validation brut
+  if (!titre || !alt_img || !niveau || !categorie) return res.status(400).json({ message: `Inputs missings` });
+
+  // Validation métier
+  if (
+    categorie !== "Langage / Framework" &&
+    categorie !== "Outil de développement" &&
+    categorie !== "Design / Organisation"
+  )
+    return res.status(400).json({ message: "categorie not authorized" });
+  if (niveau !== "Debutant" && niveau !== "Maitrise" && niveau !== "Expertise")
+    return res.status(400).json({ message: "niveau not authorized" });
+
+  return { titre, categorie, niveau, alt_img };
 }
