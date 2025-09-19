@@ -17,10 +17,10 @@ export async function createTechno(req, res) {
       categorie,
       niveau,
     });
-    res.status(200).json({ message: "Sucess create techno" });
+    res.status(200).json({ message: "CreateTechno success" });
   } catch (e) {
-    console.error(`Error in createTechno : `, e);
-    res.status(500).json({ message: `Error in createTechno` });
+    console.error(`CatchError in createTechno : ${e}`);
+    res.status(500).json({ message: `Network Error in createTechno` });
   }
 }
 
@@ -29,7 +29,7 @@ export async function getAllTechnos(req, res) {
     let data = await Techno.find();
     res.status(200).json({ data });
   } catch (e) {
-    res.status(500).json({ message: `CatchError backend in getAllTechnos : ${e.message}` });
+    res.status(500).json({ message: `CatchError in getAllTechnos : ${e}` });
   }
 }
 
@@ -55,8 +55,8 @@ export async function getAllTechnosByCategories(req, res) {
     ]);
     res.status(200).json({ message: "getAllTechnosByCategories request successfull", data });
   } catch (e) {
-    console.error(`CatchError backend in getAllTechnosByCategories:  ${e.message}`);
-    res.status(500).json({ message: "Error with getAllTechnosByCategorie" });
+    console.error(`CatchError in getAllTechnosByCategories : ${e}`);
+    res.status(500).json({ message: "Network Error in getAllTechnosByCategorie" });
   }
 }
 
@@ -66,8 +66,8 @@ export async function deleteTechno(req, res) {
     await Techno.findByIdAndDelete(id);
     res.status(200).json({ message: "Delete success" });
   } catch (e) {
-    console.error(`CatchError backend in deleteTechnos : ${e.message}`);
-    res.status(500).json({ message: "Error with deleteTechno" });
+    console.error(`CatchError in deleteTechnos : ${e}`);
+    res.status(500).json({ message: "Network Error in deleteTechno" });
   }
 }
 
@@ -86,8 +86,8 @@ export async function updateTechno(req, res) {
     await Techno.findByIdAndUpdate(id, updatingTechno);
     res.status(200).json({ message: "Update Success" });
   } catch (e) {
-    console.error(`CatchError backend in updatetechno : ${e.message}`);
-    res.status(500).json({ message: "Error whith updateTechno" });
+    console.error(`CatchError in updatetechno : ${e}`);
+    res.status(500).json({ message: "Network Error in updateTechno" });
   }
 }
 
