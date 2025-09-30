@@ -87,7 +87,12 @@ export async function loginController(req, res) {
 export async function logoutController(req, res) {
   try {
     // Nettoyer le cookie
-    res.clearCookie("token");
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      path: "/"
+    });
     // Réponse
     res.status(200).json({ message: "logout successful" });
   } catch (e) {
