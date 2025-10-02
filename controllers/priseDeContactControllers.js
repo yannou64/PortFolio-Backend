@@ -1,6 +1,7 @@
 import mail from "../utils/mail.js";
 
 export async function sendMessage(req, res) {
+  console.log("im here");
   try {
     const { emailContact, message } = req.body;
     // Pas de await pour ne pas avoir un lag avant la redirection vers la page de remerciement
