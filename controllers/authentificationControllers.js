@@ -5,20 +5,19 @@ import mdpValidation from "../utils/mdpValidation.js";
 
 export async function registerController(req, res) {
   let { identifiant, mdp, role } = req.body;
-  
+
   // validation brut
   if (!identifiant || !mdp || typeof identifiant !== "string" || typeof mdp !== "string")
     return res.status(400).json({ message: "bad register parameters" });
 
   // Normalisation
-  identifiant = identifiant.trim()
+  identifiant = identifiant.trim();
 
   // validation métier
-  if(!mdpValidation.test(mdp))
-    return res.status(400).json( { message: "bad register parameters"})
+  if (!mdpValidation.test(mdp)) return res.status(400).json({ message: "bad register parameters" });
 
   // sanitization
-  identifiant = identifiant.replace(/[<>]/g, "")
+  identifiant = identifiant.replace(/[<>]/g, "");
 
   try {
     // On vérifie si le user existe déjà
@@ -56,7 +55,7 @@ export async function loginController(req, res) {
   if (!mdpValidation.test(mdp)) return res.status(400).json({ message: "bad connection parameters" });
 
   // Sanitization
-  identifiant = identifiant.replace(/[<>]/g, ""); // supprimer d'éventuelles balise html (pas trés utile, car pour l'instant je ne l'affiche pas côté front)
+  identifiant = identifiant.replace(/[<>$]/g, ""); // supprimer d'éventuelles balise html (pas trés utile, car pour l'instant je ne l'affiche pas côté front) et les opérateur mongo $
 
   try {
     // On récupère le user dans la bdd et on vérifie que le mot de passe est bon
@@ -91,7 +90,7 @@ export async function logoutController(req, res) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      path: "/"
+      path: "/",
     });
     // Réponse
     res.status(200).json({ message: "logout successful" });
@@ -101,14 +100,16 @@ export async function logoutController(req, res) {
 }
 
 export async function checkIfAdminController(req, res) {
+  // Comportement côté front attend un status 200 sauf si erreur réseau, avec précision "auth : Boolean"
   try {
     const token = req.cookies.token;
     if (!token) return res.status(200).json({ message: "User not auth", auth: false });
+
     const decoded = jwt.verify(token, process.env.SECRET);
-    res.status(200).json({ message: "User already auth admin", auth: true });
+    return res.status(200).json({ message: "User already auth admin", auth: true });
   } catch (e) {
     if (e.name === "TokenExpiredError") {
-      return res.status(401).json({ message: "Session expired", auth: false });
+      return res.status(200).json({ message: "Session expired", auth: false });
     }
     res.status(500).json({ message: "Error during checkIfAdmin" });
   }

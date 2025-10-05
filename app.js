@@ -16,12 +16,13 @@ const port = process.env.PORT || 3000;
 // Connection à la bdd
 connectionBDD();
 
-// Pour la production sur render/heroku/vercel à mettre avant logique protocole/cookies
+// Production 
+// Pour render/heroku/vercel à mettre avant logique protocole/cookies
 if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
 }
 
-// Sécurité
+// Middlewares Sécurité
 // Sécurité : forcer le https en prod
 app.use((req, res, next) => {
   if (process.env.NODE_ENV === "production" && req.header("x-forwarded-proto") !== "https") {
@@ -30,7 +31,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Sécurité : Ajout des entêtes de sécurité et du contentSecurityPolicy, attention si j'utilise des CDN il faudra les déclarer
+// Sécurité Helmet: Ajout des entêtes de sécurité et du contentSecurityPolicy, attention si j'utilise des CDN il faudra les déclarer
 app.use(
   helmet.contentSecurityPolicy({
     useDefaults: true,
@@ -59,11 +60,12 @@ app.use(
 // Limite : max 100 requêtes par IP toutes les 15 minutes
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 1000, // 100 requêtes
+  max: 1000, // 1000 requêtes
   message: "Trop de requêtes, réessayez plus tard.",
 });
 // On applique le rate limit à toutes les routes
 app.use(limiter);
+
 
 // Lancement du serveur
 app.listen(port, () => {
@@ -74,6 +76,7 @@ app.listen(port, () => {
 app.get("/health", (req, res) => {
   res.json({ status: "ok", time: new Date().toISOString() });
 });
+
 
 // middlewares de préparation de la requête
 app.use(express.json());
