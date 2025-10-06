@@ -43,35 +43,34 @@ Clonez le dépôt, installez les dépendances et lancez le serveur :
 
 Liste les endpoints que le front utilise :
 
-**Authentification**
-Méthode Endpoint Description
+## Authentification
 
-POST /api/auth/register Création utilisateur
-POST /api/auth/login Authentification utilisateur
-POST /api/auth/logout Logout utilisateur
-GET /api/auth/checkifAdmin Vérifie si session valide
+**POST** `/api/auth/register` Création utilisateur
+**POST** `/api/auth/login` Authentification utilisateur
+**POST** `/api/auth/logout` Logout utilisateur
+**GET** `/api/auth/checkifAdmin` Vérifie si session valide
 
-**Projets**
-Méthode Endpoint Description
+## Projets
 
-POST /api/edition/projets/ Création d'un projet
-GET /api/edition/projets/ Récupère tous les projets
-GET /api/edition/projets/favoris Récupère tous les projets favoris
-GET /api/edition/projets/:id Récupère un projet avec son id
-DELETE /api/edition/projets/:id Supprime un projet avec son id
-PUT /api/edition/projets/:id Met à jour un projet avec son id
 
-**Technos**
-Méthod Endpoint Description
-POST /api/edition/technos/ Création d'une techno
-GET /api/edition/technos/ Récupère toutes les technos
-GET /api/edition/technos/byCategories Récupère toutes les technos groupés par catégories
-DELETE /api/edtion/technos/:id Supprime une techno avec son id
-PUT /api/edition/technos/:id Met à jour une techno avec son id
+**POST** `/api/edition/projets/` Création d'un projet
+**GET** `/api/edition/projets/` Récupère tous les projets
+**GET** `/api/edition/projets/favoris` Récupère tous les projets favoris
+**GET** `/api/edition/projets/:id` Récupère un projet avec son id
+**DELETE** `/api/edition/projets/:id` Supprime un projet avec son id
+**PUT** `/api/edition/projets/:id` Met à jour un projet avec son id
 
-**Prise de contact**
-Méthod Endpoint Description
-POST /priseDeConact Envoi un email à l'admin
+## Technos
+
+**POST** `/api/edition/technos/` Création d'une techno
+**GET** `/api/edition/technos/` Récupère toutes les technos
+**GET** `/api/edition/technos/byCategories` Récupère toutes les technos groupés par catégories
+**DELETE** `/api/edtion/technos/:id` Supprime une techno avec son id
+**PUT** `/api/edition/technos/:id` Met à jour une techno avec son id
+
+## Prise de contact
+
+**POST** `/priseDeConact` Envoi un email à l'admin
 
 # Architecture – Modèle MVC
 
