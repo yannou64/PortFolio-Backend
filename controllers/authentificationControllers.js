@@ -76,6 +76,7 @@ export async function loginController(req, res) {
       path: "/",
       maxAge: 60 * 60 * 1000, // aligné avec la durée de vie du token
     });
+    console.log("login ok")
     res.status(200).json({ message: "login success" });
   } catch (e) {
     console.error("Login Error: ", e);
