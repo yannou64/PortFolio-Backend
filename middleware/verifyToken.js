@@ -4,9 +4,10 @@ dotenv.config();
 
 export default function verifyToken(req, res, next) {
   // On vérifie que le client possède un token
+  console.log("Je suis dans mon middleware");
   const token = req.cookies.token;
   if (!token) {
-    console.error("Le cookie token n'a pas été trouvé")
+    console.error("Le cookie token n'a pas été trouvé");
     return res.status(401).json({ message: `You are not allowed to access token` });
   }
   // On vérifie la validité du token
